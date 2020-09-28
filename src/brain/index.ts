@@ -128,7 +128,7 @@ export class Brain {
         direction,
       } = robotCurrentLocation;
       //NOTE: can write to a different file using `fs.writeFile` module
-      console.log(x, y, direction);
+      console.log(`${x},${y},${direction}`);
     } else {
       return undefined;
     }
