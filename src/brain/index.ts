@@ -1,4 +1,4 @@
-import { Point, Shape } from "../shape";
+import { Point, Shape, SquareTable } from "../shape";
 import { Rotation, Direction, Location } from "./types";
 
 export const directions = {
@@ -21,9 +21,9 @@ const PLACE_COMMAND_REGEX = /^PLACE (?<x>-?\d),(?<y>-?\d),(?<direction>(EAST|WES
 // Handles if command given are valid;
 // If yes, execute the command and change the state of our toy Robot (machine)
 export class Brain {
-  private readonly shapeToRoamOn: Shape;
+  private readonly shapeToRoamOn: SquareTable;
   private readonly validCommands: string[] = VALID_COMMANDS;
-  constructor(shapeToRoamOn: Shape) {
+  constructor(shapeToRoamOn: SquareTable) {
     this.shapeToRoamOn = shapeToRoamOn;
   }
 
@@ -91,7 +91,10 @@ export class Brain {
       const newPosition = this.getFutureMovePosition(robotCurrentLocation);
 
       // If the new location is within the shape boundary
-      if (this.shapeToRoamOn.isPointInsideShape(newPosition)) {
+      if (
+        this.shapeToRoamOn.isPointInsideShape(newPosition) &&
+        !this.shapeToRoamOn.isPointAPotHole(newPosition)
+      ) {
         return {
           direction: robotCurrentLocation.direction,
           position: newPosition,
@@ -115,7 +118,10 @@ export class Brain {
       const newPosition = new Point(Number(x), Number(y));
 
       // Check if new location is within the shape boundary
-      if (this.shapeToRoamOn.isPointInsideShape(newPosition)) {
+      if (
+        this.shapeToRoamOn.isPointInsideShape(newPosition) &&
+        !this.shapeToRoamOn.isPointAPotHole(newPosition)
+      ) {
         return {
           direction: newDirection,
           position: newPosition,

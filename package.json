@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "rimraf ./dist && tsc",
-    "test": "jest",
+    "test": "jest --watch",
     "start": "ts-node ./src/app.ts"
   },
   "bin": {

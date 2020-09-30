@@ -42,4 +42,17 @@ export class SquareTable extends Shape {
   constructor(size: number, origin?: Point) {
     super(size, size, origin);
   }
+
+  private readonly potHoles: Point[] = [];
+
+  setPotHole(pot: Point) {
+    this.potHoles.push(pot);
+  }
+
+  isPointAPotHole(point: Point) {
+    const found = this.potHoles.find((p) => {
+      return p.x === point.x && p.y === point.y;
+    });
+    return Boolean(found);
+  }
 }

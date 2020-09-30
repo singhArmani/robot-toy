@@ -151,4 +151,26 @@ describe("Brain", () => {
       });
     });
   });
+  describe("Pot holes on the table", () => {
+    it("should ignore the command if it's making robot go into a pot hole", () => {
+      const shape = new SquareTable(5);
+      shape.setPotHole(new Point(2, 3));
+
+      const brain = new Brain(shape);
+      const robotCurrentLocation = new Point(2, 2);
+      const location = {
+        position: robotCurrentLocation,
+        direction: directions.NORTH,
+      };
+
+      const potCommand = "PLACE 2,3,NORTH";
+      const newLocation = brain.executeCommand(potCommand, location);
+
+      expect(newLocation).toBeUndefined();
+
+      const newMove = brain.executeCommand("MOVE", location);
+
+      expect(newMove).toBeUndefined();
+    });
+  });
 });
